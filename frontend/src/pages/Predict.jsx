@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const Predict = () => {
-  
   const [Glucose, setGlucose] = useState("");
   const [Insulin, setInsulin] = useState("");
   const [BMI, setBMI] = useState("");
   const [Age, setAge] = useState("");
   const [result, setResult] = useState([]);
 
-  // Function to fetch initial data (optional, depending on your API)
+  // Fetch initial data (optional, depending on your API)
   useEffect(() => {
     getResult();
   }, []);
 
   const getResult = async () => {
-    let response = await fetch('http://127.0.0.1:8000/api/');
+    let response = await fetch("http://127.0.0.1:8000/api/");
     let data = await response.json();
     setResult(data);
   };
 
-  // Function to handle form submission and send data to the API
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const formData = {
       Glucose,
       Insulin,
@@ -31,10 +30,10 @@ const Predict = () => {
     };
 
     try {
-      let response = await fetch('http://127.0.0.1:8000/api/predict', {
-        method: 'POST',
+      let response = await fetch("http://127.0.0.1:8000/api/predict", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -42,59 +41,84 @@ const Predict = () => {
       let data = await response.json();
       setResult(data); // Update the result with the API response
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Glucose:</label>
-          <input
-            type="text"
-            value={Glucose}
-            onChange={(e) => setGlucose(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Field 2:</label>
-          <input
-            type="text"
-            value={Insulin}
-            onChange={(e) => setInsulin(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Field 3:</label>
-          <input
-            type="text"
-            value={BMI}
-            onChange={(e) => setBMI(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Field 4:</label>
-          <input
-            type="text"
-            value={Age}
-            onChange={(e) => setAge(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-blue-400">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+         Enter Health Parameters
+        </h1>
 
-      <div className='data'>
-        <h3>{result.message}</h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block font-semibold text-gray-600">
+              Glucose
+            </label>
+            <input
+              type="text"
+              value={Glucose}
+              onChange={(e) => setGlucose(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold text-gray-600">
+              Insulin
+            </label>
+            <input
+              type="text"
+              value={Insulin}
+              onChange={(e) => setInsulin(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold text-gray-600">BMI</label>
+            <input
+              type="text"
+              value={BMI}
+              onChange={(e) => setBMI(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold text-gray-600">Age</label>
+            <input
+              type="text"
+              value={Age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white font-bold py-2 mt-4 rounded-md hover:bg-blue-600 transition-colors"
+          >
+            Submit
+          </button>
+        </form>
+
+        {result.message && (
+          <div className="mt-6 text-center bg-gray-50 p-4 rounded-md">
+            <h3 className="text-lg font-semibold text-gray-700">
+              {result.message}
+            </h3>
+          </div>
+        )}
       </div>
-      sample
     </div>
   );
 };
 
 export default Predict;
-
