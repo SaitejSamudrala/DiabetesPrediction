@@ -28,11 +28,11 @@ def predict(request):
         return Response({"error": f"Invalid input: {str(e)}"}, status=400)
     
     
-    if not all([glucose, insulin, bmi, age]):
-        return Response({"error": "All fields (Glucose, Insulin, BMI, Age) are required."}, status=400)
+    # if not all([glucose, insulin, bmi, age]):
+    #     return Response({"error": "All fields (Glucose, Insulin, BMI, Age) are required."}, status=400)
     
     try:
-        prediction = predict_response([int(glucose), int(insulin), float(bmi), int(age)])
+        prediction = predict_response([glucose,insulin, bmi, age])
     except ValueError as e:
         return Response({"error": str(e)}, status=400)
     print(prediction)
