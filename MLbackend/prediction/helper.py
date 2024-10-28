@@ -23,4 +23,4 @@ def predict_response(attr):
 
 if __name__ == '__main__':
     # debugging code for the predict function goes here if any
-    print(predict_response([148,0,33.6,50]))
+    print(predict_response([89,94,28.1,21]))

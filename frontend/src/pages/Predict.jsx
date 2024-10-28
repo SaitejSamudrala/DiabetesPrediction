@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 const Predict = () => {
   
-  const [Glucose, setGlucose] = useState(0);
-  const [Insulin, setInsulin] = useState(0);
-  const [BMI, setBMI] = useState(0.1);
-  const [Age, setAge] = useState(0);
+  const [Glucose, setGlucose] = useState("");
+  const [Insulin, setInsulin] = useState("");
+  const [BMI, setBMI] = useState("");
+  const [Age, setAge] = useState("");
   const [result, setResult] = useState([]);
 
   // Function to fetch initial data (optional, depending on your API)
