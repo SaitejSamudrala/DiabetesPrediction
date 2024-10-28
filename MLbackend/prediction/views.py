@@ -1,9 +1,9 @@
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from prediction.helper import predict
+from prediction.helper import predict_response
 from django.http import JsonResponse
-
+import json
 
 
  
@@ -17,10 +17,29 @@ def hello_world(request):
 
 @api_view(['POST'])
 def predict(request):
+
+    print(request.body)
+    try:
+        glucose: int = int(request.data.get("Glucose"))
+        insulin: int  = int(request.data.get("Insulin"))
+        bmi: float = float(request.data.get("BMI"))
+        age: int = int(request.data.get("Age"))
+    except ValueError as e:
+        return Response({"error": f"Invalid input: {str(e)}"}, status=400)
     
-    prediction = predict([request.Glucose,request.Insulin,request.BMI,request.Age])
+    
+    # if not all([glucose, insulin, bmi, age]):
+    #     return Response({"error": "All fields (Glucose, Insulin, BMI, Age) are required."}, status=400)
+    
+    try:
+        prediction = predict_response([glucose,insulin, bmi, age])
+    except ValueError as e:
+        return Response({"error": str(e)}, status=400)
+    print(prediction)
     if prediction == 'YES':
         return Response({"Result": "Positive"})
     return Response({"Result":"Negative"})
+
+
 
 
