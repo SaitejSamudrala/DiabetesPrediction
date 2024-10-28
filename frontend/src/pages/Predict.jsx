@@ -5,7 +5,8 @@ const Predict = () => {
   const [Insulin, setInsulin] = useState("");
   const [BMI, setBMI] = useState("");
   const [Age, setAge] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState(null);
+  const [submitted, setSubmitted] = useState(false); // State to track submission
 
   // Fetch initial data (optional, depending on your API)
   useEffect(() => {
@@ -21,7 +22,6 @@ const Predict = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = {
       Glucose,
       Insulin,
@@ -40,23 +40,22 @@ const Predict = () => {
       console.log(JSON.stringify(formData));
       let data = await response.json();
       setResult(data); // Update the result with the API response
+      setSubmitted(true); // Mark the form as submitted
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-400">
+    <div className="flex items-center justify-center min-h-screen bg-sky-600">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-         Enter Health Parameters
+          Enter Health Parameters
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block font-semibold text-gray-600">
-              Glucose
-            </label>
+            <label className="block font-semibold text-gray-600">Glucose</label>
             <input
               type="text"
               value={Glucose}
@@ -67,9 +66,7 @@ const Predict = () => {
           </div>
 
           <div>
-            <label className="block font-semibold text-gray-600">
-              Insulin
-            </label>
+            <label className="block font-semibold text-gray-600">Insulin</label>
             <input
               type="text"
               value={Insulin}
@@ -109,10 +106,10 @@ const Predict = () => {
           </button>
         </form>
 
-        {result.message && (
-          <div className="mt-6 text-center bg-gray-50 p-4 rounded-md">
-            <h3 className="text-lg font-semibold text-gray-700">
-              {result.message}
+        {submitted && result && (
+          <div className="mt-6 text-center bg-inherit p-4 rounded-md">
+            <h3 className="text-lg font-bold text-gray-700">
+              {result.Result}
             </h3>
           </div>
         )}
