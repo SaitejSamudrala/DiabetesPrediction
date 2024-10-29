@@ -1,2 +1,4 @@
 djangomlenv/
-__pycache__/*
+MLbackend/MLbackend/__pycache__/*
+MLbackend/prediction/__pycache__/*
+MLbackend/migrations/__pycache__/*
