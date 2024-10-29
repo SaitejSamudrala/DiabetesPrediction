@@ -14,7 +14,15 @@ def predict_response(attr):
     print("Starting Inference")
     filename = os.path.join(BASE_DIR, 'GaussianNB_model.sav')
     loaded_model = pickle.load(open(filename, 'rb'))
-    result = loaded_model.predict(np.array(attr).reshape(1,-1))
+
+    filename2 = os.path.join(BASE_DIR, 'StandardScaler.sav')
+    loaded_scaler = pickle.load(open(filename2, 'rb'))
+
+    
+    result = loaded_model.predict(loaded_scaler.transform(np.array(attr).reshape(1,-1)))
+    print(loaded_scaler.transform(np.array(attr).reshape(1,-1)))
+    print(f"Input attributes: {attr}")  # Debugging line
+    print(f"Model prediction: {result}")  # Debugging line
     if(result[0] == 1):
         return "YES"
     return "NO"
