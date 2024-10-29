@@ -7,7 +7,7 @@ const Predict = () => {
   const [Age, setAge] = useState("");
   const [result, setResult] = useState(null);
   const [submitted, setSubmitted] = useState(false); // State to track submission
-
+  const [loading, setLoading] = useState(false);
   // Fetch initial data (optional, depending on your API)
   useEffect(() => {
     getResult();
@@ -22,6 +22,7 @@ const Predict = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = {
       Glucose,
       Insulin,
@@ -43,6 +44,8 @@ const Predict = () => {
       setSubmitted(true); // Mark the form as submitted
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setTimeout(() => setLoading(false),500);
     }
   };
 
@@ -106,12 +109,20 @@ const Predict = () => {
           </button>
         </form>
 
-        {submitted && result && (
-          <div className="mt-6 text-center bg-inherit p-4 rounded-md">
-            <h3 className="text-lg font-bold text-gray-700">
-              {result.Result}
-            </h3>
+        {loading ? (
+          <div className="mt-6 text-center">
+            <div className="loader border-t-4 border blue-500 rounded-full w-8 h-8 mx-auto animate-spin"></div>
+            <p className="mt-2 text-gray-600">Processing...</p>
           </div>
+        ) : (
+          submitted &&
+          result && (
+            <div className="mt-6 text-center bg-inherit p-4 rounded-md">
+              <h2 className={`text-2xl font-bold ${result.Result === "Positive" ? "text-red-600": "text-green-600"}`}>
+                {result.Result}
+              </h2>
+            </div>
+          )
         )}
       </div>
     </div>
