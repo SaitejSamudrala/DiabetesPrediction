@@ -1,1 +1,2 @@
-djangomlenv
+djangomlenv/
+__pycache__/*
