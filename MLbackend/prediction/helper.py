@@ -12,7 +12,7 @@ print(BASE_DIR)
 def predict_response(attr):
     print("Starting Inference")
     print(attr)
-    filename = os.path.join(BASE_DIR,'perceptron_modell.pkl')
+    filename = os.path.join(BASE_DIR,'perceptron_model.pkl')
     loaded_perceptron_model = pickle.load(open(filename, 'rb'))
 
     filename = os.path.join(BASE_DIR,'naive_bayes_model.pkl')
@@ -29,6 +29,8 @@ def predict_response(attr):
         attr.remove("Perceptron Model")
         result=loaded_bayes_model.predict(loaded_scaler.transform(np.array(attr).reshape(1,-1)))
 
+    else:
+        return "No Valid Input"
     print((np.array(attr).reshape(1,-1)))
     print(f"Input attributes: {attr}")
     print(f"Model prediction: {result}") 

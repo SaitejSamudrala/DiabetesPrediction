@@ -5,9 +5,9 @@ const Predict = () => {
   const [Insulin, setInsulin] = useState("");
   const [BMI, setBMI] = useState("");
   const [Age, setAge] = useState("");
-  const [Model, setModel] = useState("Option1"); // New state for the dropdown
+  const [Model, setModel] = useState("Naive-Bayes Model");
   const [result, setResult] = useState(null);
-  const [submitted, setSubmitted] = useState(false); // State to track submission
+  const [submitted, setSubmitted] = useState(false); 
   const [loading, setLoading] = useState(false);
 
   // Fetch initial data (optional, depending on your API)
