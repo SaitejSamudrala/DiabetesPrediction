@@ -5,9 +5,11 @@ const Predict = () => {
   const [Insulin, setInsulin] = useState("");
   const [BMI, setBMI] = useState("");
   const [Age, setAge] = useState("");
+  const [Model, setModel] = useState("Option1"); // New state for the dropdown
   const [result, setResult] = useState(null);
   const [submitted, setSubmitted] = useState(false); // State to track submission
   const [loading, setLoading] = useState(false);
+
   // Fetch initial data (optional, depending on your API)
   useEffect(() => {
     getResult();
@@ -28,6 +30,7 @@ const Predict = () => {
       Insulin,
       BMI,
       Age,
+      Model,
     };
 
     try {
@@ -45,7 +48,7 @@ const Predict = () => {
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setTimeout(() => setLoading(false),500);
+      setTimeout(() => setLoading(false), 500);
     }
   };
 
@@ -101,6 +104,19 @@ const Predict = () => {
             />
           </div>
 
+          <div>
+            <label className="block font-semibold text-gray-600">Model</label>
+            <select
+              value={Model}
+              onChange={(e) => setModel(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            >
+              <option value="Naive-Bayes Model">Naive-Bayes Model</option>
+              <option value="Perceptron Model">Perceptron Model</option>
+            </select>
+          </div>
+
           <button
             type="submit"
             className="w-full bg-blue-500 text-white font-bold py-2 mt-4 rounded-md hover:bg-blue-600 transition-colors"
@@ -118,7 +134,13 @@ const Predict = () => {
           submitted &&
           result && (
             <div className="mt-6 text-center bg-inherit p-4 rounded-md">
-              <h2 className={`text-2xl font-bold ${result.Result === "Positive" ? "text-red-600": "text-green-600"}`}>
+              <h2
+                className={`text-2xl font-bold ${
+                  result.Result === "Positive"
+                    ? "text-red-600"
+                    : "text-green-600"
+                }`}
+              >
                 {result.Result}
               </h2>
             </div>
