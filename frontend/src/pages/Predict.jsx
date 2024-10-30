@@ -65,10 +65,21 @@ const Predict = () => {
             <input
               type="text"
               value={Glucose}
-              onChange={(e) => setGlucose(e.target.value)}
+              onChange={(e) => {
+                const glucose = e.target.value;
+                if (/^\d*$/.test(glucose)) {
+                  // Only allows digits
+                  setGlucose(glucose);
+                }
+              }}
               required
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
+            {Glucose < 0 && (
+              <p className="text-red-500 text-sm mt-1">
+                Invalid input: Glucose cannot be less than 0.
+              </p>
+            )}
           </div>
 
           <div>
@@ -76,10 +87,20 @@ const Predict = () => {
             <input
               type="text"
               value={Insulin}
-              onChange={(e) => setInsulin(e.target.value)}
+              onChange={(e) => {
+                const insulin = e.target.value;
+                if (/^\d*$/.test(insulin)) {
+                  setInsulin(insulin);
+                }
+              }}
               required
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
+            {Insulin < 0 && (
+              <p className="text-red-500 text-sm mt-1">
+                Invalid input: Insulin cannot be less than 0.
+              </p>
+            )}
           </div>
 
           <div>
@@ -87,10 +108,21 @@ const Predict = () => {
             <input
               type="text"
               value={BMI}
-              onChange={(e) => setBMI(e.target.value)}
+              onChange={(e) => {
+                const bmi = e.target.value;
+                if (/^\d*(\.\d*)?$/.test(bmi)) {
+                  // Allows only numbers and a single decimal point
+                  setBMI(bmi);
+                }
+              }}
               required
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
+            {BMI < 0 && (
+              <p className="text-red-500 text-sm mt-1">
+                Invalid input: BMI cannot be less than 0.
+              </p>
+            )}
           </div>
 
           <div>
@@ -100,7 +132,8 @@ const Predict = () => {
               value={Age}
               onChange={(e) => {
                 const age = e.target.value;
-                if (!isNaN(age)) {
+                if (/^\d*$/.test(age)) {
+                  // Only allows digits
                   setAge(age);
                 }
               }}
