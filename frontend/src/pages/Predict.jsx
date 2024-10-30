@@ -98,10 +98,20 @@ const Predict = () => {
             <input
               type="text"
               value={Age}
-              onChange={(e) => setAge(e.target.value)}
+              onChange={(e) => {
+                const age = e.target.value;
+                if (!isNaN(age)) {
+                  setAge(age);
+                }
+              }}
               required
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
+            {Age < 0 && (
+              <p className="text-red-500 text-sm mt-1">
+                Invalid input: Age cannot be less than 0.
+              </p>
+            )}
           </div>
 
           <div>
