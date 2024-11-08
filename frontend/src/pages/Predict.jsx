@@ -10,7 +10,6 @@ const Predict = () => {
   const [submitted, setSubmitted] = useState(false); 
   const [loading, setLoading] = useState(false);
 
-  // Fetch initial data (optional, depending on your API)
   useEffect(() => {
     getResult();
   }, []);
@@ -21,7 +20,6 @@ const Predict = () => {
     setResult(data);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
