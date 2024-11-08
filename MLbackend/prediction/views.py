@@ -38,8 +38,8 @@ def predict(request):
         return Response({"error": str(e)}, status=400)
     print(prediction)
     if prediction == 'YES':
-        return Response({"Result": "Positive"})
-    return Response({"Result":"Negative"})
+        return Response({"Result": "Type 1 Diabetes"})
+    return Response({"Result":"Type 0 Diabetes"})
 
 
 

@@ -43,8 +43,8 @@ const Predict = () => {
       });
       console.log(JSON.stringify(formData));
       let data = await response.json();
-      setResult(data); // Update the result with the API response
-      setSubmitted(true); // Mark the form as submitted
+      setResult(data);
+      setSubmitted(true); 
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -178,12 +178,9 @@ const Predict = () => {
           result && (
             <div className="mt-6 text-center bg-inherit p-4 rounded-md">
               <h2
-                className={`text-2xl font-bold ${
-                  result.Result === "Positive"
-                    ? "text-red-600"
-                    : "text-green-600"
-                }`}
-              >
+                className={`text-2xl font-bold text-slate-800`}
+                >
+                  <line>Prediction:</line>
                 {result.Result}
               </h2>
             </div>
